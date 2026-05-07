@@ -1,219 +1,404 @@
 <!DOCTYPE html>
-<html lang="pl">
+<html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>KulaGuard AI - Demo Platform</title>
+  <title>KulaGuard AI - Confidential Demo</title>
   <style>
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-      font-family: Arial, Helvetica, sans-serif;
+    :root {
+      --bg: #07101d;
+      --panel: rgba(13, 24, 43, 0.92);
+      --panel-2: rgba(9, 18, 34, 0.96);
+      --line: rgba(81, 140, 190, 0.28);
+      --text: #f6f8ff;
+      --muted: #9eb4d4;
+      --gold: #f3c55d;
+      --gold-2: #ffe29a;
+      --blue: #19b8ff;
+      --red: #ff4d5f;
+      --green: #45e6a6;
+      --orange: #ffb347;
     }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: Inter, Arial, Helvetica, sans-serif; }
+
     body {
-      background: #0b1020;
-      color: #f5f7fb;
       min-height: 100vh;
+      color: var(--text);
+      background:
+        radial-gradient(circle at 75% 20%, rgba(25, 184, 255, 0.20), transparent 30%),
+        radial-gradient(circle at 15% 0%, rgba(243, 197, 93, 0.16), transparent 24%),
+        linear-gradient(135deg, #050914 0%, #081a2b 48%, #030711 100%);
+      overflow-x: hidden;
     }
-    .app {
-      display: grid;
-      grid-template-columns: 260px 1fr;
-      min-height: 100vh;
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      background-image:
+        linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
+      background-size: 42px 42px;
+      mask-image: linear-gradient(to bottom, rgba(0,0,0,0.8), transparent 85%);
     }
+
+    .app { display: grid; grid-template-columns: 290px 1fr; min-height: 100vh; }
+
     .sidebar {
-      background: #070b16;
-      border-right: 1px solid #1d2942;
-      padding: 28px 22px;
+      background: linear-gradient(180deg, rgba(4, 9, 19, 0.98), rgba(8, 17, 31, 0.94));
+      border-right: 1px solid var(--line);
+      padding: 24px 20px;
+      position: relative;
     }
-    .logo-container {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      margin-bottom: 8px;
+
+    .brand { display: flex; gap: 13px; align-items: center; margin-bottom: 16px; }
+    .brand img {
+      width: 58px; height: 58px; object-fit: cover; border-radius: 16px;
+      border: 1px solid rgba(243,197,93,0.55);
+      box-shadow: 0 0 28px rgba(25,184,255,0.24), 0 0 16px rgba(243,197,93,0.20);
     }
-    .logo-img {
-      height: 52px;
-      width: auto;
+    .brand-title { font-size: 22px; font-weight: 900; letter-spacing: 0.3px; }
+    .brand-title span { color: var(--gold); }
+    .tagline { color: var(--muted); font-size: 13px; line-height: 1.5; margin-bottom: 22px; }
+
+    .live-pill {
+      display: grid; gap: 8px; background: rgba(25,184,255,0.08); border: 1px solid rgba(25,184,255,0.22);
+      border-radius: 16px; padding: 13px; margin-bottom: 22px; color: #cdeeff; font-size: 12px;
     }
-    .logo-text {
-      font-size: 26px;
-      font-weight: 800;
-      letter-spacing: 0.6px;
-      color: #f4c95d; /* złoty z logo */
-    }
-    .tagline {
-      color: #93a4c7;
-      font-size: 13px;
-      line-height: 1.5;
-      margin-bottom: 34px;
-    }
+    .dot { display: inline-block; width: 8px; height: 8px; border-radius: 50%; background: var(--green); box-shadow: 0 0 14px var(--green); margin-right: 7px; }
+
     .nav button {
-      width: 100%;
-      background: transparent;
-      color: #c9d6f2;
-      border: 1px solid transparent;
-      padding: 13px 14px;
-      margin-bottom: 10px;
-      text-align: left;
-      border-radius: 12px;
-      cursor: pointer;
-      font-size: 14px;
-      transition: all 0.2s;
+      width: 100%; background: transparent; color: #c7d8f5; border: 1px solid transparent;
+      padding: 13px 14px; margin-bottom: 10px; text-align: left; border-radius: 13px; cursor: pointer; font-size: 14px;
+      transition: 0.18s ease;
     }
-    .nav button.active,
-    .nav button:hover {
-      background: #14213d;
-      border-color: #f4c95d; /* złoty akcent */
-      color: #ffffff;
+    .nav button.active, .nav button:hover {
+      background: linear-gradient(90deg, rgba(25,184,255,0.16), rgba(243,197,93,0.08));
+      border-color: rgba(25,184,255,0.34); color: #fff; transform: translateX(2px);
     }
-    .main {
-      padding: 30px;
+
+    .main { padding: 28px; }
+    .topbar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; gap: 20px; }
+    h1 { font-size: 32px; margin-bottom: 8px; letter-spacing: -0.6px; }
+    .topbar p { color: var(--muted); font-size: 14px; }
+    .actions { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; justify-content: flex-end; }
+    .status, .lang-toggle {
+      background: rgba(8,18,34,0.82); border: 1px solid var(--line); padding: 11px 14px; border-radius: 14px;
+      font-size: 13px; color: #c6d9f5;
     }
-    .topbar {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 28px;
-      gap: 20px;
+    .lang-toggle { cursor: pointer; color: var(--gold-2); }
+
+    .hero {
+      display: grid; grid-template-columns: 1.3fr 0.9fr; gap: 20px; margin-bottom: 22px;
     }
-    .topbar h1 {
-      font-size: 30px;
-      margin-bottom: 8px;
-      color: #f4c95d;
+    .hero-card {
+      background: linear-gradient(135deg, rgba(17,31,55,0.92), rgba(7,15,29,0.92));
+      border: 1px solid var(--line); border-radius: 24px; padding: 24px; overflow: hidden; position: relative;
+      box-shadow: 0 24px 70px rgba(0,0,0,0.26);
     }
-    .status {
-      background: #0f1b31;
-      border: 1px solid #f4c95d33;
-      padding: 12px 16px;
-      border-radius: 14px;
-      font-size: 13px;
-      color: #b8c8e8;
+    .hero-card::after {
+      content: ""; position: absolute; width: 240px; height: 240px; border-radius: 50%; right: -80px; top: -90px;
+      background: radial-gradient(circle, rgba(25,184,255,0.26), transparent 62%);
     }
-    .grid {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 18px;
-      margin-bottom: 24px;
-    }
+    .eyebrow { color: var(--gold-2); text-transform: uppercase; letter-spacing: 1.6px; font-size: 12px; font-weight: 800; margin-bottom: 12px; }
+    .hero h2 { font-size: 31px; line-height: 1.15; max-width: 780px; margin-bottom: 12px; }
+    .hero p { color: #bed0ed; line-height: 1.6; max-width: 760px; }
+
+    .grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 18px; margin-bottom: 22px; }
     .card {
-      background: #111a2e;
-      border: 1px solid #233455;
-      border-radius: 18px;
-      padding: 20px;
-      box-shadow: 0 16px 40px rgba(0,0,0,0.18);
+      background: var(--panel); border: 1px solid var(--line); border-radius: 20px; padding: 20px;
+      box-shadow: 0 18px 48px rgba(0,0,0,0.22); backdrop-filter: blur(14px);
     }
-    .metric {
-      font-size: 34px;
-      font-weight: 800;
-      margin-bottom: 8px;
-      color: #f4c95d;
-    }
-    .hint {
-      color: #93a4c7;
-      font-size: 13px;
-      line-height: 1.5;
-    }
-    /* Reszta stylów bez zmian */
+    .card h3 { font-size: 14px; color: var(--muted); margin-bottom: 12px; font-weight: 700; }
+    .metric { font-size: 34px; font-weight: 900; margin-bottom: 8px; letter-spacing: -0.6px; }
+    .metric.danger { color: var(--red); text-shadow: 0 0 20px rgba(255,77,95,0.30); }
+    .metric.gold { color: var(--gold-2); }
+    .metric.blue { color: #68d4ff; }
+    .hint { color: var(--muted); font-size: 13px; line-height: 1.5; }
     .content { display: grid; grid-template-columns: 1.4fr 1fr; gap: 20px; }
+
     .table { width: 100%; border-collapse: collapse; margin-top: 12px; font-size: 14px; }
-    .table th, .table td { border-bottom: 1px solid #263855; padding: 13px 10px; text-align: left; }
-    .table th { color: #9fb0d2; font-weight: 600; }
-    .badge { display: inline-block; padding: 5px 9px; border-radius: 999px; font-size: 12px; font-weight: 700; }
-    .high { background: #592020; color: #ffd0d0; }
-    .medium { background: #59461d; color: #ffe4a3; }
-    .low { background: #173d2b; color: #b7ffd4; }
-    .blue { background: #15355d; color: #bfe0ff; }
-    .section { display: none; }
-    .section.active { display: block; }
-    .report-box {
-      background: #090e1b;
-      border: 1px solid #263855;
-      border-radius: 14px;
-      padding: 18px;
-      color: #dbe6ff;
-      line-height: 1.65;
-      white-space: pre-line;
-      font-size: 14px;
-      min-height: 240px;
-    }
+    .table th, .table td { border-bottom: 1px solid rgba(91,131,180,0.22); padding: 13px 10px; text-align: left; }
+    .table th { color: var(--muted); font-weight: 700; }
+    .badge { display: inline-block; padding: 5px 9px; border-radius: 999px; font-size: 12px; font-weight: 800; }
+    .high { background: rgba(255,77,95,0.16); color: #ffc7ce; border: 1px solid rgba(255,77,95,0.35); }
+    .medium { background: rgba(255,179,71,0.15); color: #ffe2af; border: 1px solid rgba(255,179,71,0.33); }
+    .low { background: rgba(69,230,166,0.13); color: #bdfdde; border: 1px solid rgba(69,230,166,0.30); }
+    .blue-badge { background: rgba(25,184,255,0.13); color: #c3edff; border: 1px solid rgba(25,184,255,0.32); }
+
     .button {
-      background: #f4c95d;
-      color: #0b1020;
-      border: none;
-      border-radius: 12px;
-      padding: 12px 16px;
-      font-weight: 700;
-      cursor: pointer;
-      margin-top: 14px;
+      background: linear-gradient(135deg, #18aaf2, #1f5fff); color: #fff; border: none; border-radius: 12px;
+      padding: 11px 14px; font-weight: 800; cursor: pointer; margin-top: 12px; margin-right: 7px;
+      box-shadow: 0 12px 28px rgba(25,118,255,0.23);
     }
-    .button:hover {
-      background: #e0b24a;
+    .button.gold { background: linear-gradient(135deg, #d59a25, #ffe08c); color: #07101d; }
+    .button.danger { background: linear-gradient(135deg, #ff4059, #9b1d2d); }
+    .button:hover { transform: translateY(-1px); }
+
+    .section { display: none; animation: fadeIn 0.26s ease; }
+    .section.active { display: block; }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
+
+    .gauge {
+      width: 220px; height: 220px; border-radius: 50%; margin: 6px auto 16px; display: grid; place-items: center; position: relative;
+      background: conic-gradient(var(--red) 0 76%, rgba(255,255,255,0.08) 76% 100%);
+      box-shadow: inset 0 0 30px rgba(255,255,255,0.05), 0 0 45px rgba(25,184,255,0.16);
     }
-    .footer-note {
-      margin-top: 22px;
-      color: #7284a8;
-      font-size: 12px;
+    .gauge::before { content: ""; position: absolute; width: 155px; height: 155px; border-radius: 50%; background: #081223; border: 1px solid var(--line); }
+    .gauge strong { position: relative; font-size: 36px; }
+    .bar { height: 12px; background: rgba(255,255,255,0.08); border-radius: 999px; overflow: hidden; margin: 10px 0 16px; }
+    .bar span { display: block; height: 100%; background: linear-gradient(90deg, var(--blue), var(--gold)); border-radius: 999px; animation: scanPulse 2.8s infinite; }
+    @keyframes scanPulse { 0%,100% { filter: brightness(0.9); } 50% { filter: brightness(1.35); } }
+
+    .attack-map {
+      min-height: 290px; position: relative; overflow: hidden;
+      background: radial-gradient(circle at 50% 50%, rgba(25,184,255,0.18), rgba(5,9,20,0.4) 46%, rgba(5,9,20,0.9));
     }
-    @media (max-width: 1000px) {
-      .app { grid-template-columns: 1fr; }
-      .sidebar { border-right: none; border-bottom: 1px solid #1d2942; }
-      .grid { grid-template-columns: repeat(2, 1fr); }
-      .content { grid-template-columns: 1fr; }
-    }
+    .node { position: absolute; width: 15px; height: 15px; border-radius: 50%; background: var(--blue); box-shadow: 0 0 22px var(--blue); }
+    .node.red { background: var(--red); box-shadow: 0 0 22px var(--red); animation: blink 1.1s infinite; }
+    .n1 { left: 18%; top: 25%; } .n2 { left: 70%; top: 22%; } .n3 { left: 50%; top: 56%; } .n4 { left: 26%; top: 74%; } .n5 { left: 82%; top: 70%; }
+    .laser { position: absolute; height: 2px; background: linear-gradient(90deg, transparent, var(--red), transparent); transform-origin: left; animation: laser 2s infinite; }
+    .l1 { width: 220px; left: 23%; top: 30%; transform: rotate(18deg); } .l2 { width: 260px; left: 51%; top: 58%; transform: rotate(-27deg); }
+    @keyframes blink { 50% { opacity: 0.35; } }
+    @keyframes laser { 0% { opacity: 0.2; } 50% { opacity: 1; } 100% { opacity: 0.2; } }
+
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 14px; }
+    input, select, textarea { width: 100%; background: rgba(5,10,20,0.9); border: 1px solid var(--line); border-radius: 12px; padding: 12px; color: var(--text); font-size: 14px; }
+    textarea { min-height: 120px; resize: vertical; }
+    .report-box { background: rgba(5,10,20,0.90); border: 1px solid var(--line); border-radius: 14px; padding: 18px; color: #dbe6ff; line-height: 1.65; white-space: pre-line; font-size: 14px; min-height: 250px; }
+    .footer-note { margin-top: 22px; color: #8ca4c6; font-size: 12px; display: flex; justify-content: space-between; gap: 12px; border-top: 1px solid var(--line); padding-top: 16px; }
+
+    @media (max-width: 1100px) { .app { grid-template-columns: 1fr; } .sidebar { border-right: none; border-bottom: 1px solid var(--line); } .grid { grid-template-columns: repeat(2, 1fr); } .content, .hero { grid-template-columns: 1fr; } }
+    @media (max-width: 640px) { .grid, .form-row { grid-template-columns: 1fr; } .main { padding: 18px; } .topbar { flex-direction: column; align-items: flex-start; } }
   </style>
 </head>
 <body>
   <div class="app">
     <aside class="sidebar">
-      <div class="logo-container">
-        <img src="Logo.jpg" alt="KulaGuard AI" class="logo-img">
-        <div class="logo-text">KulaGuard AI</div>
+      <div class="brand">
+        <img src="Logo.jpg" alt="Kula Group logo" onerror="this.style.display='none'" />
+        <div>
+          <div class="brand-title">Kula<span>Guard</span> AI</div>
+          <div class="hint">Enterprise AI Security</div>
+        </div>
       </div>
-      <div class="tagline">Shadow AI Detection & AI Compliance Automation for critical infrastructure</div>
-      
+      <div class="tagline" data-en="Shadow AI Detection & AI Compliance Automation for critical infrastructure." data-pl="Wykrywanie Shadow AI i automatyzacja compliance AI dla infrastruktury krytycznej.">Shadow AI Detection & AI Compliance Automation for critical infrastructure.</div>
+      <div class="live-pill">
+        <div><span class="dot"></span><span data-en="Live demo environment" data-pl="Aktywne środowisko demo">Live demo environment</span></div>
+        <div id="lastScan">Last scan: 4 minutes ago</div>
+        <div id="endpoints">Connected to 87 endpoints</div>
+      </div>
       <div class="nav">
         <button class="active" onclick="showSection('dashboard', this)">Dashboard</button>
         <button onclick="showSection('shadow', this)">Shadow AI Radar</button>
         <button onclick="showSection('compliance', this)">NIS2 / AI Act</button>
-        <button onclick="showSection('threats', this)">Adversarial AI Shield</button>
+        <button onclick="showSection('threats', this)">Adversarial Energy Shield</button>
         <button onclick="showSection('report', this)">Executive Report</button>
       </div>
     </aside>
 
     <main class="main">
-      <!-- reszta kodu bez zmian (topbar, sekcje itd.) -->
       <div class="topbar">
         <div>
-          <h1>KulaGuard AI Demo</h1>
-          <p>Interactive client demo showing AI visibility, compliance readiness and AI security posture.</p>
+          <h1 data-en="KulaGuard AI Confidential Demo" data-pl="KulaGuard AI - Poufne Demo">KulaGuard AI Confidential Demo</h1>
+          <p data-en="AI visibility, compliance readiness and adversarial AI protection for CEE critical infrastructure." data-pl="Widoczność AI, gotowość compliance i ochrona adversarial AI dla infrastruktury krytycznej CEE.">AI visibility, compliance readiness and adversarial AI protection for CEE critical infrastructure.</p>
         </div>
-        <div class="status">Demo Mode · No real company data used</div>
+        <div class="actions">
+          <button class="lang-toggle" onclick="toggleLanguage()">PL / EN</button>
+          <div class="status">Demo Mode · No real company data used</div>
+        </div>
       </div>
 
-      <!-- Tutaj wklej resztę sekcji z Twojego poprzedniego kodu (dashboard, shadow, compliance, threats, report) -->
+      <section id="dashboard" class="section active">
+        <div class="hero">
+          <div class="hero-card">
+            <div class="eyebrow">AI Security Control Tower</div>
+            <h2 data-en="Detect Shadow AI. Govern AI agents. Prepare evidence for NIS2 and AI Act." data-pl="Wykrywaj Shadow AI. Kontroluj agentów AI. Przygotuj evidence pod NIS2 i AI Act.">Detect Shadow AI. Govern AI agents. Prepare evidence for NIS2 and AI Act.</h2>
+            <p data-en="KulaGuard AI gives security and compliance leaders a single command view of AI usage, risk exposure, adversarial AI simulations and board-ready reporting." data-pl="KulaGuard AI daje liderom security i compliance jeden widok zarządczy użycia AI, ekspozycji ryzyka, symulacji adversarial AI i raportowania dla zarządu.">KulaGuard AI gives security and compliance leaders a single command view of AI usage, risk exposure, adversarial AI simulations and board-ready reporting.</p>
+            <button class="button gold" onclick="showSection('threats', document.querySelectorAll('.nav button')[3])">Launch Energy Shield Simulation</button>
+          </div>
+          <div class="card">
+            <h3>AI Risk Gauge</h3>
+            <div class="gauge"><strong>76%</strong></div>
+            <div class="hint">Composite score based on AI exposure, missing controls and adversarial test results.</div>
+          </div>
+        </div>
 
-      <div class="footer-note">© 2026 KulaGuard AI • Confidential Demo • For presentation purposes only</div>
+        <div class="grid">
+          <div class="card"><h3>AI Tools Detected</h3><div class="metric blue" id="toolsMetric">17</div><div class="hint">Across SaaS, endpoints, cloud and repositories.</div></div>
+          <div class="card"><h3>Shadow AI Risk</h3><div class="metric danger">High</div><div class="hint">Unauthorized AI usage detected in 4 departments.</div></div>
+          <div class="card"><h3>NIS2 Readiness</h3><div class="metric gold">62%</div><div class="hint">Evidence gaps identified in AI governance controls.</div></div>
+          <div class="card"><h3>AI Incidents</h3><div class="metric danger" id="incidentsMetric">9</div><div class="hint">Risky prompts, file uploads and agent actions.</div></div>
+        </div>
+
+        <div class="content">
+          <div class="card">
+            <h3>Recent AI Security Events</h3>
+            <table class="table">
+              <thead><tr><th>Event</th><th>Source</th><th>Risk</th></tr></thead>
+              <tbody>
+                <tr><td>Confidential document uploaded to public AI tool</td><td>Endpoint</td><td><span class="badge high">High</span></td></tr>
+                <tr><td>Unauthorized Copilot plugin detected</td><td>Microsoft 365</td><td><span class="badge medium">Medium</span></td></tr>
+                <tr><td>Local LLM running without approval</td><td>Developer Workstation</td><td><span class="badge high">High</span></td></tr>
+                <tr><td>AI usage policy missing for Operations</td><td>Compliance</td><td><span class="badge medium">Medium</span></td></tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="card">
+            <h3>AI Risk Summary</h3>
+            <p class="hint">KulaGuard AI detected unmanaged AI usage, missing governance evidence and elevated risk in departments handling sensitive operational data.</p>
+            <div class="bar"><span style="width:76%"></span></div>
+            <button class="button" onclick="showSection('report', document.querySelectorAll('.nav button')[4])">Generate Executive Report</button>
+          </div>
+        </div>
+      </section>
+
+      <section id="shadow" class="section">
+        <div class="card">
+          <h3>Shadow AI Radar</h3>
+          <table class="table">
+            <thead><tr><th>Tool</th><th>Location</th><th>Status</th><th>Risk</th><th>Action</th></tr></thead>
+            <tbody>
+              <tr><td>ChatGPT</td><td>Finance Department</td><td>Not approved</td><td><span class="badge high">High</span></td><td><button class="button danger" onclick="blockTool(this)">Block Tool</button></td></tr>
+              <tr><td>Microsoft Copilot</td><td>Legal Department</td><td>Approved</td><td><span class="badge low">Low</span></td><td><button class="button">Review</button></td></tr>
+              <tr><td>Gemini</td><td>Marketing</td><td>Not reviewed</td><td><span class="badge medium">Medium</span></td><td><button class="button">Review</button></td></tr>
+              <tr><td>Local LLM</td><td>Engineering</td><td>Unknown owner</td><td><span class="badge high">High</span></td><td><button class="button danger" onclick="blockTool(this)">Block Tool</button></td></tr>
+              <tr><td>Claude</td><td>Procurement</td><td>Not approved</td><td><span class="badge medium">Medium</span></td><td><button class="button">Review</button></td></tr>
+              <tr><td>AutoGPT Agent</td><td>Operations</td><td>Unmanaged agent</td><td><span class="badge high">High</span></td><td><button class="button danger" onclick="blockTool(this)">Block Tool</button></td></tr>
+              <tr><td>Perplexity</td><td>Strategy</td><td>External AI search</td><td><span class="badge medium">Medium</span></td><td><button class="button">Review</button></td></tr>
+              <tr><td>Private Mistral Model</td><td>Data Lab</td><td>Pending approval</td><td><span class="badge low">Low</span></td><td><button class="button">Approve</button></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section id="compliance" class="section">
+        <div class="grid">
+          <div class="card"><h3>AI Usage Policy</h3><div class="metric danger">Missing</div><div class="hint">Policy template can be generated.</div></div>
+          <div class="card"><h3>AI Register</h3><div class="metric gold">Partial</div><div class="hint">5 approved tools, 12 unreviewed tools.</div></div>
+          <div class="card"><h3>Risk Matrix</h3><div class="metric blue">Ready</div><div class="hint">Generated from discovered AI usage.</div></div>
+          <div class="card"><h3>Audit Trail</h3><div class="metric danger">Weak</div><div class="hint">Evidence gaps detected.</div></div>
+        </div>
+        <div class="card">
+          <h3>NIS2 / AI Act Evidence Checklist</h3>
+          <table class="table">
+            <thead><tr><th>Control</th><th>Status</th><th>Action</th></tr></thead>
+            <tbody>
+              <tr><td>AI asset inventory</td><td><span class="badge medium">Partial</span></td><td>Complete ownership mapping</td></tr>
+              <tr><td>AI risk assessment</td><td><span class="badge blue-badge">Generated</span></td><td>Review by compliance team</td></tr>
+              <tr><td>Incident response workflow</td><td><span class="badge high">Missing</span></td><td>Create AI incident playbook</td></tr>
+              <tr><td>Executive reporting</td><td><span class="badge blue-badge">Available</span></td><td>Export board report</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section id="threats" class="section">
+        <div class="hero">
+          <div class="card attack-map">
+            <h3>Live Adversarial Energy Shield Simulation</h3>
+            <div class="node n1"></div><div class="node red n2"></div><div class="node n3"></div><div class="node n4"></div><div class="node red n5"></div>
+            <div class="laser l1"></div><div class="laser l2"></div>
+          </div>
+          <div class="card">
+            <h3>OT / IT Attack Readiness</h3>
+            <p class="hint">Prompt injection defense</p><div class="bar"><span style="width:68%"></span></div>
+            <p class="hint">AI phishing resilience</p><div class="bar"><span style="width:54%"></span></div>
+            <p class="hint">Data poisoning monitoring</p><div class="bar"><span style="width:71%"></span></div>
+            <p class="hint">Model abuse control</p><div class="bar"><span style="width:82%"></span></div>
+          </div>
+        </div>
+        <div class="content">
+          <div class="card">
+            <h3>Adversarial AI Simulation Results</h3>
+            <table class="table">
+              <thead><tr><th>Scenario</th><th>Result</th><th>Risk</th></tr></thead>
+              <tbody>
+                <tr><td>Prompt injection against internal assistant</td><td>Partially successful</td><td><span class="badge high">High</span></td></tr>
+                <tr><td>AI-driven phishing simulation</td><td>8 users clicked</td><td><span class="badge medium">Medium</span></td></tr>
+                <tr><td>Data leakage via prompt upload</td><td>Detected</td><td><span class="badge high">High</span></td></tr>
+                <tr><td>Model abuse attempt</td><td>Blocked</td><td><span class="badge low">Low</span></td></tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="card">
+            <h3>Recommended Playbooks</h3>
+            <p class="hint">1. Block unapproved AI domains for sensitive departments.</p><br>
+            <p class="hint">2. Introduce AI usage approval workflow.</p><br>
+            <p class="hint">3. Create AI incident classification procedure.</p><br>
+            <p class="hint">4. Train employees on prompt injection and data leakage.</p>
+          </div>
+        </div>
+      </section>
+
+      <section id="report" class="section">
+        <div class="card">
+          <h3>Executive Report Generator</h3>
+          <div class="form-row">
+            <input id="companyName" placeholder="Company name" value="Client Energy Group" />
+            <select id="sector"><option>Energy</option><option>Manufacturing</option><option>Transport</option><option>Financial Services</option><option>Critical Infrastructure</option></select>
+          </div>
+          <textarea id="notes" placeholder="Additional notes">Initial assessment indicates unmanaged AI usage, incomplete AI governance documentation and elevated risk of sensitive data exposure through public AI tools.</textarea>
+          <button class="button gold" onclick="generateReport()">Generate Report</button>
+          <button class="button" onclick="copyReport()">Copy Report</button>
+          <button class="button" onclick="exportPDF()">Export to PDF</button>
+          <div id="reportBox" class="report-box" style="margin-top:16px;">Click “Generate Report” to create an executive summary.</div>
+        </div>
+      </section>
+
+      <div class="footer-note"><span>© 2026 KulaGuard AI | Confidential Demo</span><span>Prepared for enterprise evaluation only</span></div>
     </main>
   </div>
 
   <script>
-    // Twój poprzedni skrypt (showSection, generateReport, copyReport) - bez zmian
+    let currentLang = 'en';
     function showSection(id, button) {
       document.querySelectorAll('.section').forEach(section => section.classList.remove('active'));
       document.getElementById(id).classList.add('active');
       document.querySelectorAll('.nav button').forEach(btn => btn.classList.remove('active'));
       button.classList.add('active');
     }
+    function toggleLanguage() {
+      currentLang = currentLang === 'en' ? 'pl' : 'en';
+      document.querySelectorAll('[data-en]').forEach(el => { el.textContent = el.dataset[currentLang]; });
+    }
     function generateReport() {
       const company = document.getElementById('companyName').value || 'Client Organization';
       const sector = document.getElementById('sector').value;
       const notes = document.getElementById('notes').value;
       const report = `KulaGuard AI - Executive AI Security Report
+
 Organization: ${company}
 Sector: ${sector}
+
 Summary:
-KulaGuard AI identified elevated Shadow AI exposure and incomplete AI governance controls. ...`;
+KulaGuard AI identified elevated Shadow AI exposure, incomplete AI governance controls and adversarial AI exposure in the organization.
+
+Key Findings:
+1. 17 AI tools detected across SaaS, endpoints, cloud and repositories.
+2. 12 tools require formal review and ownership assignment.
+3. NIS2 / AI Act readiness score: 62%.
+4. High-risk events include confidential data upload to public AI tools and local LLM usage without approval.
+5. Adversarial Energy Shield found exposure to prompt injection and AI-driven phishing.
+
+Business Risk:
+Uncontrolled AI usage may increase the probability of data leakage, compliance gaps, audit failure and AI-enabled cyber incidents.
+
+Recommended Actions:
+1. Create an official AI Usage Policy.
+2. Build a complete AI asset register.
+3. Assign business owners to all AI tools.
+4. Implement AI incident response workflow.
+5. Run adversarial AI awareness training.
+6. Review high-risk AI usage within 30 days.
+
+Additional Notes:
+${notes}
+
+Conclusion:
+The organization should prioritize AI visibility, governance evidence and Shadow AI risk reduction within the next 90 days.`;
       document.getElementById('reportBox').textContent = report;
     }
     function copyReport() {
@@ -221,6 +406,25 @@ KulaGuard AI identified elevated Shadow AI exposure and incomplete AI governance
       navigator.clipboard.writeText(report);
       alert('Report copied to clipboard.');
     }
+    function exportPDF() {
+      generateReport();
+      setTimeout(() => window.print(), 150);
+    }
+    function blockTool(button) {
+      button.textContent = 'Blocked';
+      button.disabled = true;
+      button.style.opacity = '0.7';
+      const row = button.closest('tr');
+      row.querySelector('td:nth-child(3)').textContent = 'Blocked by policy';
+      row.querySelector('td:nth-child(4)').innerHTML = '<span class="badge low">Contained</span>';
+    }
+    setInterval(() => {
+      const minutes = Math.floor(Math.random() * 5) + 1;
+      const endpoints = 84 + Math.floor(Math.random() * 8);
+      document.getElementById('lastScan').textContent = `Last scan: ${minutes} minutes ago`;
+      document.getElementById('endpoints').textContent = `Connected to ${endpoints} endpoints`;
+      document.getElementById('incidentsMetric').textContent = 8 + Math.floor(Math.random() * 3);
+    }, 4200);
   </script>
 </body>
 </html>
