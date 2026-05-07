@@ -6,433 +6,70 @@
 <title>KulaGuard AI</title>
 
 <style>
-*{
-  margin:0;
-  padding:0;
-  box-sizing:border-box;
-  font-family:Arial,Helvetica,sans-serif;
-}
-
-body{
-  background:#050b18;
-  color:white;
-  overflow-x:hidden;
-}
-
-.app{
-  display:grid;
-  grid-template-columns:280px 1fr;
-  min-height:100vh;
-}
-
-.sidebar{
-  background:#08101f;
-  border-right:1px solid #1c2940;
-  padding:28px 20px;
-}
-
-.logo{
-  text-align:center;
-  margin-bottom:28px;
-}
-
-.logo img{
-  width:108px;
-  height:108px;
-  object-fit:cover;
-  border-radius:22px;
-  box-shadow:0 0 34px rgba(0,174,255,0.38);
-}
-
-.logo h1{
-  color:#f4c95d;
-  margin-top:14px;
-  font-size:28px;
-}
-
-.logo p{
-  color:#8fa5c7;
-  font-size:13px;
-  margin-top:10px;
-  line-height:1.5;
-}
-
-.nav button{
-  width:100%;
-  background:transparent;
-  border:none;
-  color:#d8e4ff;
-  padding:14px;
-  border-radius:14px;
-  margin-bottom:10px;
-  cursor:pointer;
-  text-align:left;
-  transition:0.25s;
-  font-size:15px;
-}
-
-.nav button:hover,
-.nav button.active{
-  background:#13203a;
-  border:1px solid #f4c95d;
-  color:white;
-}
-
-.main{
-  padding:30px;
-}
-
-.topbar{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  margin-bottom:25px;
-  gap:20px;
-}
-
-.topbar h2{
-  font-size:36px;
-  color:#f4c95d;
-  margin-bottom:8px;
-}
-
-.topbar p{
-  color:#9cb2d3;
-}
-
-.status{
-  background:#111d35;
-  border:1px solid #2a4065;
-  padding:14px 18px;
-  border-radius:16px;
-  color:#d7e3ff;
-  font-size:13px;
-}
-
-.grid{
-  display:grid;
-  grid-template-columns:repeat(4,1fr);
-  gap:18px;
-  margin-bottom:24px;
-}
-
-.grid-3{
-  display:grid;
-  grid-template-columns:repeat(3,1fr);
-  gap:18px;
-  margin-bottom:24px;
-}
-
-.card{
-  background:#0f1728;
-  border:1px solid #213454;
-  border-radius:20px;
-  padding:22px;
-  box-shadow:0 0 25px rgba(0,0,0,0.3);
-}
-
-.card h3{
-  color:#8ea6ca;
-  font-size:14px;
-  margin-bottom:14px;
-}
-
-.metric{
-  font-size:38px;
-  font-weight:800;
-  color:#f4c95d;
-}
-
-.metric.red{
-  color:#ff4d5d;
-}
-
-.metric.green{
-  color:#6fffb0;
-}
-
-.hint{
-  margin-top:10px;
-  color:#92a8ca;
-  font-size:13px;
-  line-height:1.5;
-}
-
-.content{
-  display:grid;
-  grid-template-columns:1.5fr 1fr;
-  gap:20px;
-}
-
-.table{
-  width:100%;
-  border-collapse:collapse;
-  margin-top:15px;
-}
-
-.table th{
-  text-align:left;
-  color:#8ea6ca;
-  font-size:13px;
-  padding:12px;
-  border-bottom:1px solid #243654;
-}
-
-.table td{
-  padding:14px 12px;
-  border-bottom:1px solid #1d2d47;
-  font-size:14px;
-}
-
-.badge{
-  padding:6px 10px;
-  border-radius:999px;
-  font-size:12px;
-  font-weight:700;
-}
-
-.high{
-  background:#4e1515;
-  color:#ffb3b3;
-}
-
-.critical{
-  background:#6e101c;
-  color:#ffd0d6;
-}
-
-.medium{
-  background:#54421a;
-  color:#ffe7a1;
-}
-
-.low{
-  background:#123626;
-  color:#bcffd8;
-}
-
-.blue{
-  background:#16385d;
-  color:#bfe0ff;
-}
-
-.button{
-  background:#f4c95d;
-  border:none;
-  color:#08101f;
-  padding:12px 18px;
-  border-radius:12px;
-  font-weight:700;
-  cursor:pointer;
-  margin-top:16px;
-  margin-right:8px;
-}
-
-.button:hover{
-  background:#ffd977;
-}
-
-.section{
-  display:none;
-  animation:fadeIn .25s ease;
-}
-
-.section.active{
-  display:block;
-}
-
-@keyframes fadeIn{
-  from{opacity:0;transform:translateY(8px);}
-  to{opacity:1;transform:translateY(0);}
-}
-
-.progress{
-  width:100%;
-  height:12px;
-  background:#18263d;
-  border-radius:999px;
-  overflow:hidden;
-  margin-top:12px;
-}
-
-.progress span{
-  display:block;
-  height:100%;
-  background:linear-gradient(90deg,#00bfff,#f4c95d);
-}
-
-.live{
-  color:#6fffb0;
-  font-size:13px;
-  margin-top:10px;
-}
-
-.step{
-  display:flex;
-  gap:16px;
-  align-items:flex-start;
-  margin-bottom:18px;
-  padding-bottom:18px;
-  border-bottom:1px solid #1d2d47;
-}
-
-.step-number{
-  width:36px;
-  height:36px;
-  border-radius:12px;
-  background:#f4c95d;
-  color:#08101f;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  font-weight:800;
-}
-
-.integration-grid{
-  display:grid;
-  grid-template-columns:repeat(4,1fr);
-  gap:14px;
-}
-
-.integration{
-  background:#101b31;
-  border:1px solid #263a5e;
-  padding:18px;
-  border-radius:16px;
-  text-align:center;
-  color:#dbe8ff;
-  font-weight:700;
-}
-
-.quote{
-  background:#101b31;
-  border:1px solid #263a5e;
-  padding:20px;
-  border-radius:18px;
-  color:#dbe8ff;
-  line-height:1.6;
-}
-
-.map{
-  min-height:270px;
-  background:
-    radial-gradient(circle at 54% 45%, rgba(244,201,93,0.22), transparent 10%),
-    radial-gradient(circle at 48% 40%, rgba(0,191,255,0.28), transparent 13%),
-    linear-gradient(135deg,#0b1628,#061020);
-  border:1px solid #263a5e;
-  border-radius:20px;
-  position:relative;
-  overflow:hidden;
-}
-
-.map::before{
-  content:"CEE LIVE RISK MAP";
-  position:absolute;
-  top:20px;
-  left:20px;
-  color:#f4c95d;
-  font-weight:800;
-  letter-spacing:1px;
-}
-
-.map-dot{
-  position:absolute;
-  width:14px;
-  height:14px;
-  border-radius:50%;
-  background:#ff4d5d;
-  box-shadow:0 0 22px #ff4d5d;
-}
-
-.dot1{top:42%;left:52%;}
-.dot2{top:47%;left:56%;}
-.dot3{top:36%;left:49%;}
-.dot4{top:55%;left:59%;}
-
-.attack-box{
-  min-height:270px;
-  background:
-    radial-gradient(circle at center,rgba(0,191,255,.18),transparent 36%),
-    linear-gradient(135deg,#0b1628,#061020);
-  border:1px solid #263a5e;
-  border-radius:20px;
-  padding:22px;
-  position:relative;
-  overflow:hidden;
-}
-
-.attack-line{
-  height:3px;
-  background:linear-gradient(90deg,transparent,#ff4d5d,transparent);
-  margin:28px 0;
-  animation:pulse 1.4s infinite;
-}
-
-@keyframes pulse{
-  0%{opacity:.25;}
-  50%{opacity:1;}
-  100%{opacity:.25;}
-}
-
-.report-box{
-  background:#08101f;
-  border:1px solid #243654;
-  border-radius:16px;
-  padding:18px;
-  margin-top:18px;
-  white-space:pre-line;
-  line-height:1.7;
-  color:#d9e6ff;
-}
-
-input,
-textarea,
-select{
-  width:100%;
-  background:#08101f;
-  border:1px solid #223657;
-  border-radius:12px;
-  padding:12px;
-  color:white;
-  margin-bottom:14px;
-}
-
-.footer{
-  margin-top:35px;
-  color:#7185a8;
-  font-size:12px;
-}
-
-@media(max-width:1100px){
-  .grid,
-  .grid-3,
-  .integration-grid{
-    grid-template-columns:repeat(2,1fr);
-  }
-  .content{
-    grid-template-columns:1fr;
-  }
-}
-
-@media(max-width:700px){
-  .app{
-    grid-template-columns:1fr;
-  }
-  .grid,
-  .grid-3,
-  .integration-grid{
-    grid-template-columns:1fr;
-  }
-}
+*{margin:0;padding:0;box-sizing:border-box;font-family:Arial,Helvetica,sans-serif;}
+body{background:#050b18;color:white;overflow-x:hidden;}
+.app{display:grid;grid-template-columns:280px 1fr;min-height:100vh;}
+.sidebar{background:#08101f;border-right:1px solid #1c2940;padding:28px 20px;}
+.logo{text-align:center;margin-bottom:28px;}
+.logo img{width:108px;height:108px;object-fit:cover;border-radius:22px;box-shadow:0 0 34px rgba(0,174,255,0.38);}
+.logo h1{color:#f4c95d;margin-top:14px;font-size:28px;}
+.logo p{color:#8fa5c7;font-size:13px;margin-top:10px;line-height:1.5;}
+.nav button{width:100%;background:transparent;border:none;color:#d8e4ff;padding:14px;border-radius:14px;margin-bottom:10px;cursor:pointer;text-align:left;transition:0.25s;font-size:15px;}
+.nav button:hover,.nav button.active{background:#13203a;border:1px solid #f4c95d;color:white;}
+.main{padding:30px;}
+.topbar{display:flex;justify-content:space-between;align-items:center;margin-bottom:25px;gap:20px;}
+.topbar h2{font-size:36px;color:#f4c95d;margin-bottom:8px;}
+.topbar p{color:#9cb2d3;}
+.status{background:#111d35;border:1px solid #2a4065;padding:14px 18px;border-radius:16px;color:#d7e3ff;font-size:13px;}
+.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;margin-bottom:24px;}
+.grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-bottom:24px;}
+.card{background:#0f1728;border:1px solid #213454;border-radius:20px;padding:22px;box-shadow:0 0 25px rgba(0,0,0,0.3);}
+.card h3{color:#8ea6ca;font-size:14px;margin-bottom:14px;}
+.metric{font-size:38px;font-weight:800;color:#f4c95d;}
+.metric.red{color:#ff4d5d;}
+.metric.green{color:#6fffb0;}
+.hint{margin-top:10px;color:#92a8ca;font-size:13px;line-height:1.5;}
+.content{display:grid;grid-template-columns:1.5fr 1fr;gap:20px;}
+.table{width:100%;border-collapse:collapse;margin-top:15px;}
+.table th{text-align:left;color:#8ea6ca;font-size:13px;padding:12px;border-bottom:1px solid #243654;}
+.table td{padding:14px 12px;border-bottom:1px solid #1d2d47;font-size:14px;}
+.badge{padding:6px 10px;border-radius:999px;font-size:12px;font-weight:700;}
+.high{background:#4e1515;color:#ffb3b3;}
+.critical{background:#6e101c;color:#ffd0d6;}
+.medium{background:#54421a;color:#ffe7a1;}
+.low{background:#123626;color:#bcffd8;}
+.button{background:#f4c95d;border:none;color:#08101f;padding:12px 18px;border-radius:12px;font-weight:700;cursor:pointer;margin-top:16px;margin-right:8px;}
+.button:hover{background:#ffd977;}
+.section{display:none;animation:fadeIn .25s ease;}
+.section.active{display:block;}
+@keyframes fadeIn{from{opacity:0;transform:translateY(8px);}to{opacity:1;transform:translateY(0);}}
+.progress{width:100%;height:12px;background:#18263d;border-radius:999px;overflow:hidden;margin-top:12px;}
+.progress span{display:block;height:100%;background:linear-gradient(90deg,#00bfff,#f4c95d);}
+.live{color:#6fffb0;font-size:13px;margin-top:10px;}
+.step{display:flex;gap:16px;align-items:flex-start;margin-bottom:18px;padding-bottom:18px;border-bottom:1px solid #1d2d47;}
+.step-number{width:36px;height:36px;border-radius:12px;background:#f4c95d;color:#08101f;display:flex;align-items:center;justify-content:center;font-weight:800;}
+.integration-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;}
+.integration{background:#101b31;border:1px solid #263a5e;padding:18px;border-radius:16px;text-align:center;color:#dbe8ff;font-weight:700;}
+.quote{background:#101b31;border:1px solid #263a5e;padding:20px;border-radius:18px;color:#dbe8ff;line-height:1.6;}
+.map{min-height:270px;background:radial-gradient(circle at 54% 45%, rgba(244,201,93,0.22), transparent 10%),radial-gradient(circle at 48% 40%, rgba(0,191,255,0.28), transparent 13%),linear-gradient(135deg,#0b1628,#061020);border:1px solid #263a5e;border-radius:20px;position:relative;overflow:hidden;}
+.map::before{content:"CEE LIVE RISK MAP";position:absolute;top:20px;left:20px;color:#f4c95d;font-weight:800;letter-spacing:1px;}
+.map-dot{position:absolute;width:14px;height:14px;border-radius:50%;background:#ff4d5d;box-shadow:0 0 22px #ff4d5d;}
+.dot1{top:42%;left:52%;}.dot2{top:47%;left:56%;}.dot3{top:36%;left:49%;}.dot4{top:55%;left:59%;}
+.attack-box{min-height:270px;background:radial-gradient(circle at center,rgba(0,191,255,.18),transparent 36%),linear-gradient(135deg,#0b1628,#061020);border:1px solid #263a5e;border-radius:20px;padding:22px;position:relative;overflow:hidden;}
+.attack-line{height:3px;background:linear-gradient(90deg,transparent,#ff4d5d,transparent);margin:28px 0;animation:pulse 1.4s infinite;}
+@keyframes pulse{0%{opacity:.25;}50%{opacity:1;}100%{opacity:.25;}}
+.report-box{background:#08101f;border:1px solid #243654;border-radius:16px;padding:18px;margin-top:18px;white-space:pre-line;line-height:1.7;color:#d9e6ff;}
+input,textarea,select{width:100%;background:#08101f;border:1px solid #223657;border-radius:12px;padding:12px;color:white;margin-bottom:14px;}
+.footer{margin-top:35px;color:#7185a8;font-size:12px;}
+@media(max-width:1100px){.grid,.grid-3,.integration-grid{grid-template-columns:repeat(2,1fr);}.content{grid-template-columns:1fr;}}
+@media(max-width:700px){.app{grid-template-columns:1fr;}.grid,.grid-3,.integration-grid{grid-template-columns:1fr;}}
 </style>
 </head>
 
 <body>
-
 <div class="app">
 
 <aside class="sidebar">
-
 <div class="logo">
 <img src="Logo.jpg" alt="KulaGuard AI Logo">
 <h1>KulaGuard AI</h1>
@@ -451,7 +88,6 @@ select{
 <button onclick="showSection('about',this)">About Us</button>
 <button onclick="showSection('report',this)">Executive Report</button>
 </div>
-
 </aside>
 
 <main class="main">
@@ -461,7 +97,6 @@ select{
 <h2>KulaGuard AI Demo</h2>
 <p>Critical Infrastructure AI Security Platform for enterprise, energy, OT/IT and regulated sectors.</p>
 </div>
-
 <div class="status">
 Last scan: 4 minutes ago<br>
 Connected to 87 endpoints<br>
@@ -470,68 +105,23 @@ Demo environment active
 </div>
 
 <section id="dashboard" class="section active">
-
 <div class="grid">
-
-<div class="card">
-<h3>AI Tools Detected</h3>
-<div class="metric">17</div>
-<div class="hint">Across SaaS, cloud, endpoint and repositories.</div>
-</div>
-
-<div class="card">
-<h3>Shadow AI Risk</h3>
-<div class="metric red">CRITICAL</div>
-<div class="hint">Unauthorized AI usage detected in sensitive business units.</div>
-</div>
-
-<div class="card">
-<h3>NIS2 Readiness</h3>
-<div class="metric">58%</div>
-<div class="progress"><span style="width:58%"></span></div>
-</div>
-
-<div class="card">
-<h3>AI Act Compliance</h3>
-<div class="metric">64%</div>
-<div class="progress"><span style="width:64%"></span></div>
-</div>
-
+<div class="card"><h3>AI Tools Detected</h3><div class="metric">17</div><div class="hint">Across SaaS, cloud, endpoint and repositories.</div></div>
+<div class="card"><h3>Shadow AI Risk</h3><div class="metric red">CRITICAL</div><div class="hint">Unauthorized AI usage detected in sensitive business units.</div></div>
+<div class="card"><h3>NIS2 Readiness</h3><div class="metric">58%</div><div class="progress"><span style="width:58%"></span></div></div>
+<div class="card"><h3>AI Act Compliance</h3><div class="metric">64%</div><div class="progress"><span style="width:64%"></span></div></div>
 </div>
 
 <div class="grid">
-
-<div class="card">
-<h3>Estimated Financial Exposure</h3>
-<div class="metric red">€3.8M</div>
-<div class="hint">Potential breach and compliance impact exposure.</div>
-</div>
-
-<div class="card">
-<h3>AI Prompts Analyzed</h3>
-<div class="metric">1,248</div>
-<div class="hint">Prompt activity reviewed for risk and leakage.</div>
-</div>
-
-<div class="card">
-<h3>Endpoints Monitored</h3>
-<div class="metric">87</div>
-<div class="hint">Enterprise endpoint telemetry simulated.</div>
-</div>
-
-<div class="card">
-<h3>Risk Reduction Target</h3>
-<div class="metric green">-82%</div>
-<div class="hint">Target reduction of unauthorized AI usage.</div>
-</div>
-
+<div class="card"><h3>Estimated Financial Exposure</h3><div class="metric red">€3.8M</div><div class="hint">Potential breach and compliance impact exposure.</div></div>
+<div class="card"><h3>AI Prompts Analyzed</h3><div class="metric">1,248</div><div class="hint">Prompt activity reviewed for risk and leakage.</div></div>
+<div class="card"><h3>Endpoints Monitored</h3><div class="metric">87</div><div class="hint">Enterprise endpoint telemetry simulated.</div></div>
+<div class="card"><h3>Risk Reduction Target</h3><div class="metric green">-82%</div><div class="hint">Target reduction of unauthorized AI usage.</div></div>
 </div>
 
 <div class="content">
-
 <div class="card">
 <h3>Recent AI Security Events</h3>
-
 <table class="table">
 <tr><th>Event</th><th>Source</th><th>Risk</th></tr>
 <tr><td>Confidential file uploaded to public AI tool</td><td>Endpoint</td><td><span class="badge critical">CRITICAL</span></td></tr>
@@ -540,149 +130,49 @@ Demo environment active
 <tr><td>AI policy missing for operations team</td><td>Compliance</td><td><span class="badge medium">MEDIUM</span></td></tr>
 </table>
 </div>
-
-<div class="card">
-<h3>Live Risk Map</h3>
-<div class="map">
-<div class="map-dot dot1"></div>
-<div class="map-dot dot2"></div>
-<div class="map-dot dot3"></div>
-<div class="map-dot dot4"></div>
+<div class="card"><h3>Live Risk Map</h3><div class="map"><div class="map-dot dot1"></div><div class="map-dot dot2"></div><div class="map-dot dot3"></div><div class="map-dot dot4"></div></div></div>
 </div>
-</div>
-
-</div>
-
 </section>
 
 <section id="how" class="section">
-
 <div class="card">
 <h3>How KulaGuard AI Works</h3>
-
-<div class="step">
-<div class="step-number">1</div>
-<div>
-<h3>Connect Telemetry</h3>
-<div class="hint">Connect Microsoft 365, cloud, SIEM, endpoint and proxy telemetry.</div>
+<div class="step"><div class="step-number">1</div><div><h3>Connect Telemetry</h3><div class="hint">Connect Microsoft 365, cloud, SIEM, endpoint and proxy telemetry.</div></div></div>
+<div class="step"><div class="step-number">2</div><div><h3>Discover AI Usage</h3><div class="hint">Identify ChatGPT, Copilot, Gemini, Claude, local LLMs and AI agents.</div></div></div>
+<div class="step"><div class="step-number">3</div><div><h3>Detect Shadow AI</h3><div class="hint">Classify unauthorized tools, risky prompts, uploads and unmanaged agents.</div></div></div>
+<div class="step"><div class="step-number">4</div><div><h3>Simulate Adversarial AI Attacks</h3><div class="hint">Run prompt injection, AI phishing, data leakage and model abuse simulations.</div></div></div>
+<div class="step"><div class="step-number">5</div><div><h3>Generate Evidence</h3><div class="hint">Produce NIS2 / AI Act evidence packs, executive reports and remediation actions.</div></div></div>
 </div>
-</div>
-
-<div class="step">
-<div class="step-number">2</div>
-<div>
-<h3>Discover AI Usage</h3>
-<div class="hint">Identify ChatGPT, Copilot, Gemini, Claude, local LLMs and AI agents.</div>
-</div>
-</div>
-
-<div class="step">
-<div class="step-number">3</div>
-<div>
-<h3>Detect Shadow AI</h3>
-<div class="hint">Classify unauthorized tools, risky prompts, uploads and unmanaged agents.</div>
-</div>
-</div>
-
-<div class="step">
-<div class="step-number">4</div>
-<div>
-<h3>Simulate Adversarial AI Attacks</h3>
-<div class="hint">Run prompt injection, AI phishing, data leakage and model abuse simulations.</div>
-</div>
-</div>
-
-<div class="step">
-<div class="step-number">5</div>
-<div>
-<h3>Generate Evidence</h3>
-<div class="hint">Produce NIS2 / AI Act evidence packs, executive reports and remediation actions.</div>
-</div>
-</div>
-
-</div>
-
 </section>
 
 <section id="traction" class="section">
-
 <div class="grid">
-
-<div class="card">
-<h3>Endpoints Monitored</h3>
-<div class="metric">87</div>
-<div class="hint">Demo pilot telemetry across IT environments.</div>
-</div>
-
-<div class="card">
-<h3>Prompts Analyzed</h3>
-<div class="metric">1,248</div>
-<div class="hint">AI prompt activity risk-classified.</div>
-</div>
-
-<div class="card">
-<h3>Shadow AI Tools Found</h3>
-<div class="metric">14</div>
-<div class="hint">Unapproved tools identified across departments.</div>
-</div>
-
-<div class="card">
-<h3>Unauthorized Usage Reduction</h3>
-<div class="metric green">-82%</div>
-<div class="hint">Target after governance policy rollout.</div>
-</div>
-
+<div class="card"><h3>Endpoints Monitored</h3><div class="metric">87</div><div class="hint">Pilot telemetry across IT environments.</div></div>
+<div class="card"><h3>Prompts Analyzed</h3><div class="metric">1,248</div><div class="hint">AI prompt activity risk-classified.</div></div>
+<div class="card"><h3>Shadow AI Tools Found</h3><div class="metric">14</div><div class="hint">Unapproved tools identified across departments.</div></div>
+<div class="card"><h3>Unauthorized Usage Reduction</h3><div class="metric green">-82%</div><div class="hint">Target after governance policy rollout.</div></div>
 </div>
 
 <div class="grid-3">
-
-<div class="quote">
-“Visibility into unmanaged AI usage became clear within the first assessment cycle.”
-<br><br>
-<span class="hint">CISO, anonymized energy operator</span>
+<div class="quote">“Visibility into unmanaged AI usage became clear within the first assessment cycle.”<br><br><span class="hint">CISO, anonymized energy operator</span></div>
+<div class="quote">“The executive report helped translate AI risk into business language.”<br><br><span class="hint">Compliance lead, anonymized industrial group</span></div>
+<div class="quote">“The OT/IT adversarial simulation is the most valuable differentiator.”<br><br><span class="hint">Security advisor, anonymized infrastructure team</span></div>
 </div>
-
-<div class="quote">
-“The executive report helped translate AI risk into business language.”
-<br><br>
-<span class="hint">Compliance lead, anonymized industrial group</span>
-</div>
-
-<div class="quote">
-“The OT/IT adversarial simulation is the most valuable differentiator.”
-<br><br>
-<span class="hint">Security advisor, anonymized infrastructure team</span>
-</div>
-
-</div>
-
 </section>
 
 <section id="integrations" class="section">
-
 <div class="card">
 <h3>Integrations</h3>
-
 <div class="integration-grid">
-<div class="integration">Microsoft 365</div>
-<div class="integration">Azure</div>
-<div class="integration">Okta</div>
-<div class="integration">CrowdStrike</div>
-<div class="integration">SentinelOne</div>
-<div class="integration">Siemens</div>
-<div class="integration">Schneider Electric</div>
-<div class="integration">Nozomi Networks</div>
+<div class="integration">Microsoft 365</div><div class="integration">Azure</div><div class="integration">Okta</div><div class="integration">CrowdStrike</div>
+<div class="integration">SentinelOne</div><div class="integration">Siemens</div><div class="integration">Schneider Electric</div><div class="integration">Nozomi Networks</div>
 </div>
-
 </div>
-
 </section>
 
 <section id="shadow" class="section">
-
 <div class="card">
 <h3>Shadow AI Radar</h3>
-
 <table class="table">
 <tr><th>Tool</th><th>Status</th><th>Risk</th><th>Action</th></tr>
 <tr><td>ChatGPT</td><td>Unapproved</td><td><span class="badge critical">CRITICAL</span></td><td><button class="button" onclick="blockTool(this)">Block Tool</button></td></tr>
@@ -691,162 +181,78 @@ Demo environment active
 <tr><td>Local LLM</td><td>Unmanaged model</td><td><span class="badge high">HIGH</span></td><td><button class="button" onclick="blockTool(this)">Block Tool</button></td></tr>
 <tr><td>AutoGPT Agent</td><td>Unmanaged agent</td><td><span class="badge critical">CRITICAL</span></td><td><button class="button" onclick="blockTool(this)">Disable Agent</button></td></tr>
 </table>
-
 </div>
-
 </section>
 
 <section id="compliance" class="section">
-
 <div class="grid">
-
-<div class="card">
-<h3>AI Policy</h3>
-<div class="metric red">Missing</div>
-<div class="hint">Corporate AI usage policy required.</div>
+<div class="card"><h3>AI Policy</h3><div class="metric red">Missing</div><div class="hint">Corporate AI usage policy required.</div></div>
+<div class="card"><h3>AI Register</h3><div class="metric">Partial</div><div class="hint">5 approved tools, 12 pending review.</div></div>
+<div class="card"><h3>Risk Matrix</h3><div class="metric green">Ready</div><div class="hint">Generated from AI usage telemetry.</div></div>
+<div class="card"><h3>Audit Trail</h3><div class="metric red">Weak</div><div class="hint">Evidence gaps found.</div></div>
 </div>
-
-<div class="card">
-<h3>AI Register</h3>
-<div class="metric">Partial</div>
-<div class="hint">5 approved tools, 12 pending review.</div>
-</div>
-
-<div class="card">
-<h3>Risk Matrix</h3>
-<div class="metric green">Ready</div>
-<div class="hint">Generated from AI usage telemetry.</div>
-</div>
-
-<div class="card">
-<h3>Audit Trail</h3>
-<div class="metric red">Weak</div>
-<div class="hint">Evidence gaps found.</div>
-</div>
-
-</div>
-
 </section>
 
 <section id="shield" class="section">
-
 <div class="content">
-
 <div class="card">
 <h3>Adversarial AI Shield Simulation</h3>
-
 <div class="attack-box">
-<div class="live">● Prompt Injection in progress</div>
-<div class="attack-line"></div>
-<div class="live">● Data leakage simulation running</div>
-<div class="attack-line"></div>
-<div class="live">● AI phishing scenario active</div>
-<div class="attack-line"></div>
+<div class="live">● Prompt Injection in progress</div><div class="attack-line"></div>
+<div class="live">● Data leakage simulation running</div><div class="attack-line"></div>
+<div class="live">● AI phishing scenario active</div><div class="attack-line"></div>
 <div class="hint">OT/IT AI attack simulation for energy and critical infrastructure environments.</div>
 </div>
-
 </div>
-
-<div class="card">
-<h3>Threat Level</h3>
-<div class="metric red">78%</div>
-<div class="progress"><span style="width:78%"></span></div>
-<div class="hint">Adversarial AI activity detected in simulated OT/IT environment.</div>
+<div class="card"><h3>Threat Level</h3><div class="metric red">78%</div><div class="progress"><span style="width:78%"></span></div><div class="hint">Adversarial AI activity detected in simulated OT/IT environment.</div></div>
 </div>
-
-</div>
-
 </section>
 
 <section id="market" class="section">
-
 <div class="grid-3">
-
-<div class="card">
-<h3>Market Opportunity</h3>
-<div class="metric">EU</div>
-<div class="hint">Critical infrastructure, energy, transport, industrial and regulated sectors.</div>
+<div class="card"><h3>Market Opportunity</h3><div class="metric">EU</div><div class="hint">Critical infrastructure, energy, transport, industrial and regulated sectors.</div></div>
+<div class="card"><h3>Regulatory Pull</h3><div class="metric">NIS2</div><div class="hint">Governance, incident readiness, evidence and executive accountability.</div></div>
+<div class="card"><h3>Strategic Fit</h3><div class="metric">CEE</div><div class="hint">Designed for energy and infrastructure operators across Central Europe.</div></div>
 </div>
-
-<div class="card">
-<h3>Regulatory Pull</h3>
-<div class="metric">NIS2</div>
-<div class="hint">Governance, incident readiness, evidence and executive accountability.</div>
-</div>
-
-<div class="card">
-<h3>Strategic Fit</h3>
-<div class="metric">CEE</div>
-<div class="hint">Designed for energy and infrastructure operators across Central Europe.</div>
-</div>
-
-</div>
-
-<div class="card">
-<h3>Kulczyk Investments Fit</h3>
-<div class="hint">
-KulaGuard AI focuses on AI security for critical infrastructure, OT/IT environments, energy operators, manufacturing and transport.  
-The platform is aligned with regulatory pressure from NIS2 and AI Act, and can support portfolio-level resilience, AI governance and cyber risk reduction.
-</div>
-</div>
-
+<div class="card"><h3>Kulczyk Investments Fit</h3><div class="hint">KulaGuard AI focuses on AI security for critical infrastructure, OT/IT environments, energy operators, manufacturing and transport. The platform is aligned with regulatory pressure from NIS2 and AI Act, and can support portfolio-level resilience, AI governance and cyber risk reduction.</div></div>
 </section>
 
 <section id="about" class="section">
-
-<div class="grid-3">
-
 <div class="card">
-<h3>Founder</h3>
-<div class="metric">Kula</div>
-<div class="hint">Building AI Security, AI governance and enterprise demo systems for regulated sectors.</div>
-</div>
+<h3>About Founder</h3>
+<div style="display:flex;gap:20px;align-items:center;flex-wrap:wrap;">
+<img src="Logo.jpg" style="width:120px;height:120px;border-radius:20px;object-fit:cover;border:2px solid #f4c95d;">
+<div>
+<h2 style="color:#f4c95d;margin-bottom:10px;">Krystian Kula</h2>
+<p class="hint" style="max-width:900px;line-height:1.8;">
+Founder of KulaGuard AI with operational background in cybersecurity, critical infrastructure protection and enterprise security operations.
 
-<div class="card">
-<h3>Focus</h3>
-<div class="metric">AI + Cyber</div>
-<div class="hint">Shadow AI, agent governance, NIS2 evidence and adversarial AI defense.</div>
-</div>
+Former Police Criminal Division officer and Regional Security Manager within Google security operations across Poland.
 
-<div class="card">
-<h3>Advisors</h3>
-<div class="metric">Open</div>
-<div class="hint">Seeking cybersec, energy, OT security and enterprise sales advisors.</div>
-</div>
+Experience includes AI governance, crisis response, compliance operations, incident management and secure enterprise automation.
 
-</div>
+Currently Head of Operations at TomFit AG, focused on AI implementation, LLM automation and enterprise operational security.
 
+KulaGuard AI was created to help organizations detect Shadow AI, reduce compliance risk and secure AI adoption across OT and IT environments.
+</p>
+</div>
+</div>
+</div>
 </section>
 
 <section id="report" class="section">
-
 <div class="card">
 <h3>Executive Report Generator</h3>
-
 <input id="companyName" placeholder="Company Name" value="Client Energy Group">
-
-<select id="sector">
-<option>Energy</option>
-<option>Manufacturing</option>
-<option>Transport</option>
-<option>Financial Services</option>
-<option>Critical Infrastructure</option>
-</select>
-
+<select id="sector"><option>Energy</option><option>Manufacturing</option><option>Transport</option><option>Financial Services</option><option>Critical Infrastructure</option></select>
 <input id="exposure" placeholder="Estimated Financial Exposure" value="€3.8M">
-
 <input id="reduction" placeholder="Risk Reduction Target" value="-82% unauthorized AI usage reduction">
-
 <textarea id="notes">Initial assessment identified unmanaged AI usage, incomplete AI governance controls, adversarial AI exposure and elevated Shadow AI risk.</textarea>
-
 <button class="button" onclick="generateReport()">Generate Report</button>
 <button class="button" onclick="copyReport()">Copy Report</button>
 <button class="button" onclick="window.print()">Export PDF</button>
-
 <div id="reportBox" class="report-box">Click Generate Report</div>
-
 </div>
-
 </section>
 
 <div class="footer">
@@ -854,21 +260,13 @@ The platform is aligned with regulatory pressure from NIS2 and AI Act, and can s
 </div>
 
 </main>
-
 </div>
 
 <script>
 function showSection(id,button){
-  document.querySelectorAll('.section').forEach(section=>{
-    section.classList.remove('active');
-  });
-
+  document.querySelectorAll('.section').forEach(section=>section.classList.remove('active'));
   document.getElementById(id).classList.add('active');
-
-  document.querySelectorAll('.nav button').forEach(btn=>{
-    btn.classList.remove('active');
-  });
-
+  document.querySelectorAll('.nav button').forEach(btn=>btn.classList.remove('active'));
   button.classList.add('active');
 }
 
@@ -879,8 +277,7 @@ function generateReport(){
   const reduction=document.getElementById('reduction').value;
   const notes=document.getElementById('notes').value;
 
-  const report=`
-KulaGuard AI - Executive AI Security Report
+  const report=`KulaGuard AI - Executive AI Security Report
 
 Organization: ${company}
 Sector: ${sector}
@@ -912,8 +309,7 @@ Additional Notes:
 ${notes}
 
 Conclusion:
-The organization should prioritize AI visibility, Shadow AI governance and adversarial AI readiness within the next 90 days.
-`;
+The organization should prioritize AI visibility, Shadow AI governance and adversarial AI readiness within the next 90 days.`;
 
   document.getElementById('reportBox').textContent=report;
 }
