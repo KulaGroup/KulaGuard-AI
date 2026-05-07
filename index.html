@@ -1,226 +1,676 @@
 <!DOCTYPE html>
-<html lang="pl">
+<html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>KulaGuard AI - Demo Platform</title>
-  <style>
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-      font-family: Arial, Helvetica, sans-serif;
-    }
-    body {
-      background: #0b1020;
-      color: #f5f7fb;
-      min-height: 100vh;
-    }
-    .app {
-      display: grid;
-      grid-template-columns: 260px 1fr;
-      min-height: 100vh;
-    }
-    .sidebar {
-      background: #070b16;
-      border-right: 1px solid #1d2942;
-      padding: 28px 22px;
-    }
-    .logo-container {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      margin-bottom: 8px;
-    }
-    .logo-img {
-      height: 52px;
-      width: auto;
-    }
-    .logo-text {
-      font-size: 26px;
-      font-weight: 800;
-      letter-spacing: 0.6px;
-      color: #f4c95d; /* złoty z logo */
-    }
-    .tagline {
-      color: #93a4c7;
-      font-size: 13px;
-      line-height: 1.5;
-      margin-bottom: 34px;
-    }
-    .nav button {
-      width: 100%;
-      background: transparent;
-      color: #c9d6f2;
-      border: 1px solid transparent;
-      padding: 13px 14px;
-      margin-bottom: 10px;
-      text-align: left;
-      border-radius: 12px;
-      cursor: pointer;
-      font-size: 14px;
-      transition: all 0.2s;
-    }
-    .nav button.active,
-    .nav button:hover {
-      background: #14213d;
-      border-color: #f4c95d; /* złoty akcent */
-      color: #ffffff;
-    }
-    .main {
-      padding: 30px;
-    }
-    .topbar {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 28px;
-      gap: 20px;
-    }
-    .topbar h1 {
-      font-size: 30px;
-      margin-bottom: 8px;
-      color: #f4c95d;
-    }
-    .status {
-      background: #0f1b31;
-      border: 1px solid #f4c95d33;
-      padding: 12px 16px;
-      border-radius: 14px;
-      font-size: 13px;
-      color: #b8c8e8;
-    }
-    .grid {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 18px;
-      margin-bottom: 24px;
-    }
-    .card {
-      background: #111a2e;
-      border: 1px solid #233455;
-      border-radius: 18px;
-      padding: 20px;
-      box-shadow: 0 16px 40px rgba(0,0,0,0.18);
-    }
-    .metric {
-      font-size: 34px;
-      font-weight: 800;
-      margin-bottom: 8px;
-      color: #f4c95d;
-    }
-    .hint {
-      color: #93a4c7;
-      font-size: 13px;
-      line-height: 1.5;
-    }
-    /* Reszta stylów bez zmian */
-    .content { display: grid; grid-template-columns: 1.4fr 1fr; gap: 20px; }
-    .table { width: 100%; border-collapse: collapse; margin-top: 12px; font-size: 14px; }
-    .table th, .table td { border-bottom: 1px solid #263855; padding: 13px 10px; text-align: left; }
-    .table th { color: #9fb0d2; font-weight: 600; }
-    .badge { display: inline-block; padding: 5px 9px; border-radius: 999px; font-size: 12px; font-weight: 700; }
-    .high { background: #592020; color: #ffd0d0; }
-    .medium { background: #59461d; color: #ffe4a3; }
-    .low { background: #173d2b; color: #b7ffd4; }
-    .blue { background: #15355d; color: #bfe0ff; }
-    .section { display: none; }
-    .section.active { display: block; }
-    .report-box {
-      background: #090e1b;
-      border: 1px solid #263855;
-      border-radius: 14px;
-      padding: 18px;
-      color: #dbe6ff;
-      line-height: 1.65;
-      white-space: pre-line;
-      font-size: 14px;
-      min-height: 240px;
-    }
-    .button {
-      background: #f4c95d;
-      color: #0b1020;
-      border: none;
-      border-radius: 12px;
-      padding: 12px 16px;
-      font-weight: 700;
-      cursor: pointer;
-      margin-top: 14px;
-    }
-    .button:hover {
-      background: #e0b24a;
-    }
-    .footer-note {
-      margin-top: 22px;
-      color: #7284a8;
-      font-size: 12px;
-    }
-    @media (max-width: 1000px) {
-      .app { grid-template-columns: 1fr; }
-      .sidebar { border-right: none; border-bottom: 1px solid #1d2942; }
-      .grid { grid-template-columns: repeat(2, 1fr); }
-      .content { grid-template-columns: 1fr; }
-    }
-  </style>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>KulaGuard AI</title>
+
+<style>
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:Arial,Helvetica,sans-serif;
+}
+
+body{
+  background:#050b18;
+  color:white;
+  overflow-x:hidden;
+}
+
+.app{
+  display:grid;
+  grid-template-columns:280px 1fr;
+  min-height:100vh;
+}
+
+.sidebar{
+  background:#08101f;
+  border-right:1px solid #1c2940;
+  padding:28px 20px;
+}
+
+.logo{
+  text-align:center;
+  margin-bottom:30px;
+}
+
+.logo img{
+  width:90px;
+  height:90px;
+  object-fit:cover;
+  border-radius:20px;
+  box-shadow:0 0 30px rgba(0,174,255,0.35);
+}
+
+.logo h1{
+  color:#f4c95d;
+  margin-top:12px;
+  font-size:28px;
+}
+
+.logo p{
+  color:#8fa5c7;
+  font-size:13px;
+  margin-top:10px;
+  line-height:1.5;
+}
+
+.nav button{
+  width:100%;
+  background:transparent;
+  border:none;
+  color:#d8e4ff;
+  padding:15px;
+  border-radius:14px;
+  margin-bottom:12px;
+  cursor:pointer;
+  text-align:left;
+  transition:0.25s;
+  font-size:15px;
+}
+
+.nav button:hover,
+.nav button.active{
+  background:#13203a;
+  border:1px solid #f4c95d;
+  color:white;
+}
+
+.main{
+  padding:30px;
+}
+
+.topbar{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-bottom:25px;
+  gap:20px;
+}
+
+.topbar h2{
+  font-size:36px;
+  color:#f4c95d;
+  margin-bottom:8px;
+}
+
+.topbar p{
+  color:#9cb2d3;
+}
+
+.status{
+  background:#111d35;
+  border:1px solid #2a4065;
+  padding:14px 18px;
+  border-radius:16px;
+  color:#d7e3ff;
+  font-size:13px;
+}
+
+.grid{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:18px;
+  margin-bottom:24px;
+}
+
+.card{
+  background:#0f1728;
+  border:1px solid #213454;
+  border-radius:20px;
+  padding:22px;
+  box-shadow:0 0 25px rgba(0,0,0,0.3);
+}
+
+.card h3{
+  color:#8ea6ca;
+  font-size:14px;
+  margin-bottom:14px;
+}
+
+.metric{
+  font-size:38px;
+  font-weight:800;
+  color:#f4c95d;
+}
+
+.metric.red{
+  color:#ff5b5b;
+}
+
+.hint{
+  margin-top:10px;
+  color:#92a8ca;
+  font-size:13px;
+  line-height:1.5;
+}
+
+.content{
+  display:grid;
+  grid-template-columns:1.5fr 1fr;
+  gap:20px;
+}
+
+.table{
+  width:100%;
+  border-collapse:collapse;
+  margin-top:15px;
+}
+
+.table th{
+  text-align:left;
+  color:#8ea6ca;
+  font-size:13px;
+  padding:12px;
+  border-bottom:1px solid #243654;
+}
+
+.table td{
+  padding:14px 12px;
+  border-bottom:1px solid #1d2d47;
+  font-size:14px;
+}
+
+.badge{
+  padding:6px 10px;
+  border-radius:999px;
+  font-size:12px;
+  font-weight:700;
+}
+
+.high{
+  background:#4e1515;
+  color:#ffb3b3;
+}
+
+.medium{
+  background:#54421a;
+  color:#ffe7a1;
+}
+
+.low{
+  background:#123626;
+  color:#bcffd8;
+}
+
+.blue{
+  background:#16385d;
+  color:#bfe0ff;
+}
+
+.button{
+  background:#f4c95d;
+  border:none;
+  color:#08101f;
+  padding:12px 18px;
+  border-radius:12px;
+  font-weight:700;
+  cursor:pointer;
+  margin-top:16px;
+}
+
+.button:hover{
+  background:#ffd977;
+}
+
+.section{
+  display:none;
+}
+
+.section.active{
+  display:block;
+}
+
+.progress{
+  width:100%;
+  height:12px;
+  background:#18263d;
+  border-radius:999px;
+  overflow:hidden;
+  margin-top:12px;
+}
+
+.progress span{
+  display:block;
+  height:100%;
+  background:linear-gradient(90deg,#00bfff,#f4c95d);
+}
+
+.live{
+  color:#6fffb0;
+  font-size:13px;
+  margin-top:10px;
+}
+
+.report-box{
+  background:#08101f;
+  border:1px solid #243654;
+  border-radius:16px;
+  padding:18px;
+  margin-top:18px;
+  white-space:pre-line;
+  line-height:1.7;
+  color:#d9e6ff;
+}
+
+input,
+textarea,
+select{
+  width:100%;
+  background:#08101f;
+  border:1px solid #223657;
+  border-radius:12px;
+  padding:12px;
+  color:white;
+  margin-bottom:14px;
+}
+
+.footer{
+  margin-top:35px;
+  color:#7185a8;
+  font-size:12px;
+}
+
+@media(max-width:1100px){
+
+.grid{
+  grid-template-columns:repeat(2,1fr);
+}
+
+.content{
+  grid-template-columns:1fr;
+}
+
+}
+
+@media(max-width:700px){
+
+.app{
+  grid-template-columns:1fr;
+}
+
+.grid{
+  grid-template-columns:1fr;
+}
+
+}
+</style>
 </head>
+
 <body>
-  <div class="app">
-    <aside class="sidebar">
-      <div class="logo-container">
-        <img src="Logo.jpg" alt="KulaGuard AI" class="logo-img">
-        <div class="logo-text">KulaGuard AI</div>
-      </div>
-      <div class="tagline">Shadow AI Detection & AI Compliance Automation for critical infrastructure</div>
-      
-      <div class="nav">
-        <button class="active" onclick="showSection('dashboard', this)">Dashboard</button>
-        <button onclick="showSection('shadow', this)">Shadow AI Radar</button>
-        <button onclick="showSection('compliance', this)">NIS2 / AI Act</button>
-        <button onclick="showSection('threats', this)">Adversarial AI Shield</button>
-        <button onclick="showSection('report', this)">Executive Report</button>
-      </div>
-    </aside>
 
-    <main class="main">
-      <!-- reszta kodu bez zmian (topbar, sekcje itd.) -->
-      <div class="topbar">
-        <div>
-          <h1>KulaGuard AI Demo</h1>
-          <p>Interactive client demo showing AI visibility, compliance readiness and AI security posture.</p>
-        </div>
-        <div class="status">Demo Mode · No real company data used</div>
-      </div>
+<div class="app">
 
-      <!-- Tutaj wklej resztę sekcji z Twojego poprzedniego kodu (dashboard, shadow, compliance, threats, report) -->
+<aside class="sidebar">
 
-      <div class="footer-note">© 2026 KulaGuard AI • Confidential Demo • For presentation purposes only</div>
-    </main>
-  </div>
+<div class="logo">
+<img src="Logo.jpg" alt="logo">
+<h1>KulaGuard AI</h1>
+<p>
+Shadow AI Detection & AI Compliance Automation for Critical Infrastructure
+</p>
+</div>
 
-  <script>
-    // Twój poprzedni skrypt (showSection, generateReport, copyReport) - bez zmian
-    function showSection(id, button) {
-      document.querySelectorAll('.section').forEach(section => section.classList.remove('active'));
-      document.getElementById(id).classList.add('active');
-      document.querySelectorAll('.nav button').forEach(btn => btn.classList.remove('active'));
-      button.classList.add('active');
-    }
-    function generateReport() {
-      const company = document.getElementById('companyName').value || 'Client Organization';
-      const sector = document.getElementById('sector').value;
-      const notes = document.getElementById('notes').value;
-      const report = `KulaGuard AI - Executive AI Security Report
+<div class="nav">
+<button class="active" onclick="showSection('dashboard',this)">Dashboard</button>
+<button onclick="showSection('shadow',this)">Shadow AI Radar</button>
+<button onclick="showSection('compliance',this)">NIS2 / AI Act</button>
+<button onclick="showSection('shield',this)">Adversarial AI Shield</button>
+<button onclick="showSection('report',this)">Executive Report</button>
+</div>
+
+</aside>
+
+<main class="main">
+
+<div class="topbar">
+
+<div>
+<h2>KulaGuard AI Demo</h2>
+<p>
+Interactive AI Security Platform for enterprise and critical infrastructure.
+</p>
+</div>
+
+<div class="status">
+Last scan: 4 minutes ago<br>
+Connected to 87 endpoints
+</div>
+
+</div>
+
+<section id="dashboard" class="section active">
+
+<div class="grid">
+
+<div class="card">
+<h3>AI Tools Detected</h3>
+<div class="metric">17</div>
+<div class="hint">Across SaaS, cloud and endpoints.</div>
+</div>
+
+<div class="card">
+<h3>Shadow AI Risk</h3>
+<div class="metric red">HIGH</div>
+<div class="hint">Unauthorized AI usage detected.</div>
+</div>
+
+<div class="card">
+<h3>NIS2 Readiness</h3>
+<div class="metric">62%</div>
+<div class="progress"><span style="width:62%"></span></div>
+</div>
+
+<div class="card">
+<h3>AI Incidents</h3>
+<div class="metric">9</div>
+<div class="hint">Potential risky prompts and uploads.</div>
+</div>
+
+</div>
+
+<div class="content">
+
+<div class="card">
+
+<h3>Recent AI Security Events</h3>
+
+<table class="table">
+
+<tr>
+<th>Event</th>
+<th>Source</th>
+<th>Risk</th>
+</tr>
+
+<tr>
+<td>Confidential file uploaded to ChatGPT</td>
+<td>Endpoint</td>
+<td><span class="badge high">HIGH</span></td>
+</tr>
+
+<tr>
+<td>Unauthorized Copilot Plugin</td>
+<td>M365</td>
+<td><span class="badge medium">MEDIUM</span></td>
+</tr>
+
+<tr>
+<td>Local LLM detected</td>
+<td>Engineering</td>
+<td><span class="badge high">HIGH</span></td>
+</tr>
+
+<tr>
+<td>AI Policy Missing</td>
+<td>Compliance</td>
+<td><span class="badge medium">MEDIUM</span></td>
+</tr>
+
+</table>
+
+</div>
+
+<div class="card">
+
+<h3>Live Telemetry</h3>
+
+<div class="live">● AI Scan Active</div>
+<div class="live">● 12 AI agents monitored</div>
+<div class="live">● Threat simulation online</div>
+
+<button class="button">
+Generate Executive Report
+</button>
+
+</div>
+
+</div>
+
+</section>
+
+<section id="shadow" class="section">
+
+<div class="card">
+
+<h3>Shadow AI Radar</h3>
+
+<table class="table">
+
+<tr>
+<th>Tool</th>
+<th>Status</th>
+<th>Risk</th>
+<th>Action</th>
+</tr>
+
+<tr>
+<td>ChatGPT</td>
+<td>Unapproved</td>
+<td><span class="badge high">HIGH</span></td>
+<td><button class="button">Block Tool</button></td>
+</tr>
+
+<tr>
+<td>Claude</td>
+<td>Unknown Owner</td>
+<td><span class="badge medium">MEDIUM</span></td>
+<td><button class="button">Block Tool</button></td>
+</tr>
+
+<tr>
+<td>Gemini</td>
+<td>Not Reviewed</td>
+<td><span class="badge medium">MEDIUM</span></td>
+<td><button class="button">Block Tool</button></td>
+</tr>
+
+</table>
+
+</div>
+
+</section>
+
+<section id="compliance" class="section">
+
+<div class="grid">
+
+<div class="card">
+<h3>AI Policy</h3>
+<div class="metric red">Missing</div>
+</div>
+
+<div class="card">
+<h3>AI Register</h3>
+<div class="metric">Partial</div>
+</div>
+
+<div class="card">
+<h3>Risk Matrix</h3>
+<div class="metric">Ready</div>
+</div>
+
+<div class="card">
+<h3>Audit Trail</h3>
+<div class="metric red">Weak</div>
+</div>
+
+</div>
+
+</section>
+
+<section id="shield" class="section">
+
+<div class="content">
+
+<div class="card">
+
+<h3>Adversarial AI Simulation</h3>
+
+<table class="table">
+
+<tr>
+<th>Scenario</th>
+<th>Result</th>
+<th>Risk</th>
+</tr>
+
+<tr>
+<td>Prompt Injection</td>
+<td>Partially Successful</td>
+<td><span class="badge high">HIGH</span></td>
+</tr>
+
+<tr>
+<td>AI Phishing</td>
+<td>8 Users Clicked</td>
+<td><span class="badge medium">MEDIUM</span></td>
+</tr>
+
+<tr>
+<td>Model Abuse</td>
+<td>Blocked</td>
+<td><span class="badge low">LOW</span></td>
+</tr>
+
+</table>
+
+</div>
+
+<div class="card">
+
+<h3>Threat Level</h3>
+
+<div class="metric red">78%</div>
+
+<div class="progress">
+<span style="width:78%"></span>
+</div>
+
+<div class="hint">
+Adversarial AI activity detected in OT/IT environment.
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+<section id="report" class="section">
+
+<div class="card">
+
+<h3>Executive Report Generator</h3>
+
+<input id="companyName" placeholder="Company Name">
+
+<select id="sector">
+<option>Energy</option>
+<option>Manufacturing</option>
+<option>Transport</option>
+<option>Financial Services</option>
+</select>
+
+<textarea id="notes">
+Initial assessment identified unmanaged AI usage and elevated Shadow AI exposure.
+</textarea>
+
+<button class="button" onclick="generateReport()">
+Generate Report
+</button>
+
+<button class="button" onclick="copyReport()">
+Copy Report
+</button>
+
+<button class="button" onclick="window.print()">
+Export PDF
+</button>
+
+<div id="reportBox" class="report-box">
+Click Generate Report
+</div>
+
+</div>
+
+</section>
+
+<div class="footer">
+© 2026 KulaGuard AI | Confidential Demo
+</div>
+
+</main>
+
+</div>
+
+<script>
+
+function showSection(id,button){
+
+document.querySelectorAll('.section').forEach(section=>{
+section.classList.remove('active');
+});
+
+document.getElementById(id).classList.add('active');
+
+document.querySelectorAll('.nav button').forEach(btn=>{
+btn.classList.remove('active');
+});
+
+button.classList.add('active');
+
+}
+
+function generateReport(){
+
+const company=document.getElementById('companyName').value;
+const sector=document.getElementById('sector').value;
+const notes=document.getElementById('notes').value;
+
+const report=`
+KulaGuard AI - Executive Security Report
+
 Organization: ${company}
+
 Sector: ${sector}
+
 Summary:
-KulaGuard AI identified elevated Shadow AI exposure and incomplete AI governance controls. ...`;
-      document.getElementById('reportBox').textContent = report;
-    }
-    function copyReport() {
-      const report = document.getElementById('reportBox').textContent;
-      navigator.clipboard.writeText(report);
-      alert('Report copied to clipboard.');
-    }
-  </script>
+KulaGuard AI identified elevated Shadow AI exposure and incomplete AI governance controls.
+
+Key Findings:
+- 17 AI tools detected
+- 12 tools require review
+- NIS2 readiness: 62%
+- High risk AI incidents detected
+
+Business Risk:
+Uncontrolled AI usage may increase risk of data leakage and compliance gaps.
+
+Additional Notes:
+${notes}
+
+Conclusion:
+AI governance and Shadow AI visibility should be prioritized within 90 days.
+`;
+
+document.getElementById('reportBox').textContent=report;
+
+}
+
+function copyReport(){
+
+const report=document.getElementById('reportBox').textContent;
+
+navigator.clipboard.writeText(report);
+
+alert('Report copied');
+
+}
+
+</script>
+
 </body>
 </html>
