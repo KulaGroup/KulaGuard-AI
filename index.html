@@ -94,7 +94,7 @@ ul.clean{margin-left:18px;color:#92a8ca;font-size:13px;line-height:1.8;}
 <button onclick="showSection('parser',this)">Log Parser MVP</button>
 <button onclick="showSection('how',this)">How It Works</button>
 <button onclick="showSection('mvp',this)">MVP Status</button>
-<button onclick="showSection('validation',this)">Validation</button>
+<button onclick="showSection('validation',this)">Traction Plan</button>
 <button onclick="showSection('integrations',this)">Integrations</button>
 <button onclick="showSection('shadow',this)">Shadow AI Radar</button>
 <button onclick="showSection('compliance',this)">NIS2 / AI Act</button>
@@ -127,7 +127,7 @@ Pilot validation target: 30-60 days
 </div>
 
 <div class="notice" id="noticeBox">
-KulaGuard AI presents a focused MVP path: detect unmanaged AI usage from browser/proxy and Microsoft 365 audit logs, generate executive risk reports, and validate the product through 1-2 controlled pilots or LOIs in energy, transport or regulated CEE enterprise environments.
+KulaGuard AI detects unmanaged AI usage from browser/proxy and Microsoft 365 audit logs, maps risk ownership, and turns Shadow AI exposure into executive-ready governance reports for regulated organizations.
 </div>
 
 <section id="dashboard" class="section active">
@@ -170,31 +170,34 @@ KulaGuard AI presents a focused MVP path: detect unmanaged AI usage from browser
 <div class="card">
 <h3>Browser / M365 Log Parser MVP</h3>
 <div class="hint">Paste browser history, proxy export, DNS log, CSV-like M365 audit data or raw text containing URLs/domains. The parser detects known AI tools, counts events and assigns simple risk levels.</div>
+<input type="file" id="csvUpload" accept=".csv,.txt,.log" onchange="handleFileUpload(event)">
+<div class="small">Upload CSV, TXT or LOG export from browser history, proxy, DNS or Microsoft 365 audit data. The file is processed locally in the browser for this demo.</div>
 <textarea id="logInput">2026-05-07T09:12:11Z,user1@company.com,Visited,chat.openai.com,Finance Team
 2026-05-07T09:18:44Z,user2@company.com,FileUpload,claude.ai,Legal Team,contract_draft.pdf
 2026-05-07T10:03:02Z,user3@company.com,Visited,copilot.microsoft.com,Operations
 2026-05-07T10:22:18Z,user4@company.com,Visited,gemini.google.com,Engineering
 2026-05-07T11:10:39Z,user5@company.com,Visited,perplexity.ai,Sales</textarea>
-<button class="button" onclick="parseLogs()">Run Parser</button>
+<button class="button" onclick="parseLogs()">Run Detection</button>
 <button class="button" onclick="loadSampleLogs()">Load Sample</button>
-<div id="parserSummary" class="parser-output">Parser ready. Paste logs and click Run Parser.</div>
+<div id="parserSummary" class="parser-output">Detection engine ready. Upload CSV/TXT/LOG or paste telemetry and click Run Detection.</div>
 </div>
 
 <div class="card">
 <h3>MVP Detection Logic</h3>
 <ul class="clean">
+<li>Upload CSV/TXT/LOG files or paste raw browser, proxy, DNS or M365 audit telemetry.</li>
 <li>Detects 50+ mapped AI services and domains.</li>
 <li>Flags file uploads to public AI tools as critical risk.</li>
-<li>Maps users, departments, domains and event counts.</li>
+<li>Maps users, departments, domains, event counts and risk level.</li>
 <li>Creates pilot-ready evidence for an executive report.</li>
-<li>Designed to evolve into FastAPI backend with database storage.</li>
+<li>Generates working detection output inside the investor preview.</li>
 </ul>
-<div class="small">This is a client-side MVP parser for demonstration and pilot preparation. Production deployment should use approved telemetry ingestion, authentication, logging, encryption and tenant isolation.</div>
+<div class="small">The current detector runs locally in the browser for preview purposes. Production deployment should use approved telemetry ingestion, authentication, logging, encryption and tenant isolation.</div>
 </div>
 </div>
 
 <div class="card">
-<h3>Detected AI Events</h3>
+<h3>Working Detection Output</h3>
 <table class="table" id="parserTable">
 <tr><th>Domain</th><th>Tool</th><th>Events</th><th>Risk</th></tr>
 </table>
@@ -249,16 +252,16 @@ KulaGuard AI presents a focused MVP path: detect unmanaged AI usage from browser
 
 <section id="validation" class="section">
 <div class="grid">
-<div class="card"><h3>Target Case Studies</h3><div class="metric">1-2</div><div class="hint">Planned validation with regulated or infrastructure-adjacent organizations in CEE.</div></div>
-<div class="card"><h3>LOI Target</h3><div class="metric green">2</div><div class="hint">Target letters of intent from energy, transport, logistics or manufacturing operators.</div></div>
+<div class="card"><h3>Design Partners</h3><div class="metric">Seeking 2</div><div class="hint">Targeting regulated organizations willing to validate Shadow AI visibility on approved telemetry.</div></div>
+<div class="card"><h3>Pilot Conversations</h3><div class="metric green">In Progress</div><div class="hint">Positioned for early discussions with energy, transport, logistics and manufacturing stakeholders.</div></div>
 <div class="card"><h3>AI Tools Mapped</h3><div class="metric">50+</div><div class="hint">Detection catalogue for public AI tools, coding assistants, agent platforms and LLM services.</div></div>
-<div class="card"><h3>Pilot Window</h3><div class="metric blue">30-60d</div><div class="hint">Short validation cycle focused on telemetry parsing, executive risk reporting and commercial fit.</div></div>
+<div class="card"><h3>Pilot Window</h3><div class="metric blue">30-60d</div><div class="hint">Short validation cycle focused on telemetry parsing, risk scoring and executive reporting.</div></div>
 </div>
 
 <div class="grid-3">
-<div class="quote">Pilot Case Study 01<br><br><span class="hint">Target: energy or regulated infrastructure operator. Objective: map Shadow AI usage from browser/proxy and M365 audit logs.</span></div>
-<div class="quote">Pilot Case Study 02<br><br><span class="hint">Target: transport, logistics or manufacturing environment. Objective: validate executive report value and AI governance remediation workflow.</span></div>
-<div class="quote">LOI Path<br><br><span class="hint">After pilot: request LOI, paid PoC or strategic advisory support based on validated findings and stakeholder feedback.</span></div>
+<div class="quote">Design Partner Track<br><br><span class="hint">Seeking first regulated organizations to test browser/proxy or Microsoft 365 audit telemetry under controlled conditions.</span></div>
+<div class="quote">Pilot Track<br><br><span class="hint">Initial pilot conversations can focus on one narrow question: which AI tools are being used, by whom, and with what business risk?</span></div>
+<div class="quote">LOI / PoC Track<br><br><span class="hint">After successful findings: request LOI, paid PoC or strategic advisory support based on validated value.</span></div>
 </div>
 <button class="button" onclick="backDashboard()">Back to Dashboard</button>
 </section>
@@ -365,9 +368,9 @@ KulaGuard AI was created to help organizations discover Shadow AI, reduce govern
 <h3>Executive Report Generator</h3>
 <input id="companyName" placeholder="Company Name" value="Pilot Client Environment">
 <select id="sector"><option>Energy</option><option>Manufacturing</option><option>Transport</option><option>Financial Services</option><option>Critical Infrastructure</option></select>
-<input id="exposure" placeholder="Estimated Financial Exposure" value="Scenario-based exposure model">
+<input id="exposure" placeholder="Estimated Financial Exposure" value="Calculated after pilot data review">
 <input id="reduction" placeholder="Risk Reduction Target" value="Reduce unmanaged AI usage through visibility, policy and ownership">
-<textarea id="notes">MVP assessment identified unmanaged AI tool access, incomplete AI governance controls, public AI upload risk and Shadow AI ownership gaps.</textarea>
+<textarea id="notes">Assessment identified unmanaged AI tool access, incomplete AI governance controls, public AI upload risk and Shadow AI ownership gaps.</textarea>
 <button class="button" onclick="generateReport()">Generate Report</button>
 <button class="button" onclick="copyReport()">Copy Report</button>
 <button class="button" onclick="exportPDF()">Export PDF</button>
@@ -377,7 +380,7 @@ KulaGuard AI was created to help organizations discover Shadow AI, reduce govern
 </section>
 
 <div class="footer">
-© 2026 KulaGuard AI | Confidential MVP Investor Preview | Prepared for pilot and strategic evaluation only
+© 2026 KulaGuard AI | Confidential MVP Preview | Prepared for pilot and strategic evaluation only
 </div>
 
 </main>
@@ -508,29 +511,38 @@ return 'low';
 }
 
 function parseLogs(){
-const raw=document.getElementById('logInput').value.toLowerCase();
+const rawOriginal=document.getElementById('logInput').value;
+const raw=rawOriginal.toLowerCase();
 const counts={};
 let fileUploads=0;
 let totalEvents=0;
+let riskScore=0;
 
 aiServices.forEach(service=>{
 const domain=service.domain.toLowerCase();
-const re=new RegExp(domain.replace(/[.*+?^${}()|[\]\\]/g,'\\$&'),'g');
+const escaped=domain.replace(/[.*+?^${}()|[\]\]/g,'\$&');
+const re=new RegExp(escaped,'g');
 const matches=raw.match(re);
 if(matches && matches.length){
 counts[domain]={tool:service.tool,risk:service.risk,events:matches.length};
 totalEvents+=matches.length;
+if(service.risk==='CRITICAL') riskScore+=matches.length*25;
+else if(service.risk==='HIGH') riskScore+=matches.length*15;
+else if(service.risk==='MEDIUM') riskScore+=matches.length*8;
+else riskScore+=matches.length*3;
 }
 });
 
-fileUploads=(raw.match(/fileupload|upload|uploaded|attachment|\.pdf|\.docx|\.xlsx|\.csv/g)||[]).length;
+fileUploads=(raw.match(/fileupload|upload|uploaded|attachment|\.pdf|\.docx|\.xlsx|\.csv|\.pptx|\.zip/g)||[]).length;
+riskScore+=fileUploads*20;
+riskScore=Math.min(100,riskScore);
 
 const table=document.getElementById('parserTable');
 table.innerHTML='<tr><th>Domain</th><th>Tool</th><th>Events</th><th>Risk</th></tr>';
 
 const domains=Object.keys(counts).sort((a,b)=>counts[b].events-counts[a].events);
 if(domains.length===0){
-document.getElementById('parserSummary').textContent='No mapped AI services detected. Add browser, proxy or M365 audit log lines containing AI tool domains.';
+document.getElementById('parserSummary').textContent='No mapped AI services detected. Upload or paste browser, proxy, DNS or M365 audit log lines containing AI tool domains.';
 return;
 }
 
@@ -544,7 +556,19 @@ table.appendChild(row);
 });
 
 const critical=domains.filter(d=>counts[d].risk==='CRITICAL').length;
-document.getElementById('parserSummary').innerHTML=`Detected <b>${totalEvents}</b> AI-related event(s) across <b>${domains.length}</b> mapped AI service(s). File/upload indicators: <b>${fileUploads}</b>. Critical-risk services detected: <b>${critical}</b>. Recommended next step: export pilot evidence and review ownership, policy approval and department-level exposure.`;
+const riskLabel=riskScore>=75?'CRITICAL':riskScore>=50?'HIGH':riskScore>=25?'MEDIUM':'LOW';
+document.getElementById('parserSummary').innerHTML=`<b>Detection complete.</b><br>Detected <b>${totalEvents}</b> AI-related event(s) across <b>${domains.length}</b> mapped AI service(s). File/upload indicators: <b>${fileUploads}</b>. Critical-risk services detected: <b>${critical}</b>.<br><br><b>Risk score:</b> ${riskScore}/100 <span class="badge ${riskClass(riskLabel)}">${riskLabel}</span><br><br><b>Recommended output:</b> review ownership, sensitive departments, file uploads and policy approval status before pilot report export.`;
+}
+
+function handleFileUpload(event){
+const file=event.target.files[0];
+if(!file) return;
+const reader=new FileReader();
+reader.onload=function(e){
+document.getElementById('logInput').value=e.target.result;
+parseLogs();
+};
+reader.readAsText(file);
 }
 
 function loadSampleLogs(){
@@ -569,7 +593,7 @@ const report=`KulaGuard AI - Executive AI Security MVP Report
 
 Organization: ${company}
 Sector: ${sector}
-Document status: MVP investor preview / pilot validation report
+Document status: MVP detection and pilot validation report
 
 Summary:
 KulaGuard AI is an AI governance and Shadow AI visibility platform designed to help regulated organizations identify unmanaged AI usage, policy gaps, risky AI behavior and executive-level remediation priorities.
@@ -678,7 +702,7 @@ doc.text(value,x+4,yPos+18);
 }
 
 sectionTitle('Organization');
-bodyText(`Organization: ${data.company}\nSector: ${data.sector}\nStatus: MVP investor preview / pilot validation report`);
+bodyText(`Organization: ${data.company}\nSector: ${data.sector}\nStatus: MVP detection and pilot validation report`);
 
 metric('AI Tools','50+',20,y);
 metric('Pilot Goal','30-60d',78,y);
@@ -713,7 +737,7 @@ doc.setDrawColor(244,201,93);
 doc.line(12,278,198,278);
 doc.setFontSize(8);
 doc.setTextColor(140,160,190);
-doc.text('© 2026 KulaGuard AI | Confidential MVP Investor Preview',20,286);
+doc.text('© 2026 KulaGuard AI | Confidential MVP Preview',20,286);
 
 doc.save('KulaGuard_AI_MVP_Report.pdf');
 }
